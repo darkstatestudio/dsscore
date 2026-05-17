@@ -1,0 +1,105 @@
+root = true
+
+# ===========================
+# 🧱 Global settings
+# ===========================
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# UE uses tabs for C++, spaces elsewhere
+indent_style = tab
+indent_size = 4
+tab_width = 4
+
+# ===========================
+# 💻 C++ Source / Header
+# ===========================
+[*.{h,hpp,cpp,inl}]
+indent_style = tab
+indent_size = 4
+tab_width = 4
+continuation_indent_size = 8
+max_line_length = 120
+insert_final_newline = true
+file_header_template = Copyright Dark State Studio.All rights reserved.
+
+# --- Braces ---
+ij_cpp_place_lbrace_on_next_line = false
+ij_cpp_space_before_class_lbrace = true
+ij_cpp_space_before_method_lbrace = true
+ij_cpp_space_before_control_flow_lbrace = true
+
+# --- Spacing ---
+ij_cpp_space_within_parentheses = false
+ij_cpp_space_after_comma = true
+ij_cpp_space_before_comma = false
+ij_cpp_space_before_colon = false
+ij_cpp_space_after_colon = true
+ij_cpp_space_around_assignment_operators = true
+ij_cpp_space_around_binary_operators = true
+ij_cpp_space_before_pointer_star = false
+ij_cpp_space_after_pointer_star = false
+ij_cpp_space_before_reference_ampersand = false
+ij_cpp_space_after_reference_ampersand = false
+
+# --- Alignment ---
+ij_cpp_align_consecutive_assignments = true
+ij_cpp_align_consecutive_declarations = true
+ij_cpp_align_trailing_comments = true
+
+# --- Blank lines ---
+ij_cpp_blank_lines_before_class = 1
+ij_cpp_blank_lines_after_class = 1
+ij_cpp_blank_lines_before_method = 1
+ij_cpp_blank_lines_after_method = 1
+ij_cpp_blank_lines_around_field = 0
+ij_cpp_blank_lines_around_namespace = 1
+
+# --- UE naming consistency ---
+# UE uses PascalCase for types and UpperCamelCase for methods, no underscores.
+ij_cpp_space_after_cast = false
+ij_cpp_keep_simple_blocks_in_one_line = false
+
+# ===========================
+# ⚙️ C# (Build.cs / Target.cs)
+# ===========================
+[*.cs]
+indent_style = space
+indent_size = 4
+tab_width = 4
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+max_line_length = 120
+csharp_new_line_before_open_brace = all
+csharp_indent_case_contents = true
+file_header_template = Copyright Dark State Studio.All rights reserved.
+
+# ===========================
+# 🧩 INI (Config Files)
+# ===========================
+[*.ini]
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# ===========================
+# 📝 JSON / YAML / Markdown
+# ===========================
+[*.{json,yml,yaml,md}]
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# ===========================
+# 🔵 UBT / UHT Generated Code
+# ===========================
+[Generated/*]
+trim_trailing_whitespace = false
+insert_final_newline = false
+
