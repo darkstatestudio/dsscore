@@ -1,0 +1,34 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "0.1.0",
+	"FriendlyName": "DssCore",
+	"Description": "Collection of usefully stuff",
+	"Category": "Framework",
+	"CreatedBy": "Dark State Studio",
+	"CreatedByURL": "https://darkstatestudio.com",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": true,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "DssCore",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "DssTestCore",
+			"Type": "DeveloperTool",
+			"LoadingPhase": "PostEngineInit"
+		},
+		{
+			"Name": "DssEditorCore",
+			"Type": "Editor",
+			"LoadingPhase": "PostEngineInit"
+		}
+	]
+}
