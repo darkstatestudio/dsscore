@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "Localization/DssLanguageSubsystem.h"
 #include "DssCoreGameInstance.generated.h"
 
 UCLASS()
@@ -19,5 +20,10 @@ public:
 	FRandomStream GetRandomStream() const
 	{
 		return FRandomStream(RandomSeed);
+	}
+
+	UDssLanguageSubsystem* GetLanguageSubsystem() const
+	{
+		return GetSubsystem<UDssLanguageSubsystem>();
 	}
 };

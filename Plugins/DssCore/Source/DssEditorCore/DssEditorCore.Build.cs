@@ -4,24 +4,22 @@ public class DssEditorCore : ModuleRules
 {
     public DssEditorCore(ReadOnlyTargetRules Target) : base(Target)
     {
-        PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        PublicDependencyModuleNames.AddRange(
-            new string[]
-            {
-                "Core",
-                "DssCore",
-            }
-        );
+        PublicDependencyModuleNames.AddRange([
+            "Core",
+            "DssCore"
+        ]);
 
-        PrivateDependencyModuleNames.AddRange(
-            new string[]
-            {
-                "CoreUObject",
-                "Engine",
-                "Slate",
-                "SlateCore"
-            }
-        );
+        PrivateDependencyModuleNames.AddRange([
+            "CoreUObject",
+            "Engine",
+            "Slate",
+            "SlateCore",
+            "UnrealEd",
+            "AssetTools",
+            "AssetRegistry",
+            "Projects"
+        ]);
     }
 }
