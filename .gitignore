@@ -79,3 +79,5 @@ DerivedDataCache/*
 .idea/
 
 Content/Developers/*
+
+dist/

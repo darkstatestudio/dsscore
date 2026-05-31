@@ -22,7 +22,7 @@ indent_style = tab
 indent_size = 4
 tab_width = 4
 continuation_indent_size = 8
-max_line_length = 120
+max_line_length = 150
 insert_final_newline = true
 file_header_template = Copyright Dark State Studio.All rights reserved.
 
