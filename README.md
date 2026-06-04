@@ -45,3 +45,12 @@ Edit -> Plugins
 Restart Unreal Engine.
 
 ---
+
+
+
+# Depended Plugin development
+
+
+```powershell
+./Tool/Dev/LinkPlugin.ps1 -PluginPath ../DssVR/Plugins/DssVR -Rebase
+```
