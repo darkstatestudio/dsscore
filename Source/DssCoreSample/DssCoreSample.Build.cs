@@ -2,20 +2,29 @@ using UnrealBuildTool;
 
 public class DssCoreSample : ModuleRules
 {
-	public DssCoreSample(ReadOnlyTargetRules Target) : base(Target)
-	{
-		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+    public DssCoreSample(ReadOnlyTargetRules Target) : base(Target)
+    {
+        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine","RHI", "RenderCore", "InputCore", "DssCore", "DeveloperSettings" });
+        PublicDependencyModuleNames.AddRange([
+            "Core",
+            "CoreUObject",
+            "Engine", "RHI",
+            "RenderCore",
+            "InputCore",
+            "DssCore",
 
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
+            "DeveloperSettings"
+        ]);
 
-		// Uncomment if you are using Slate UI
-		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
+        PrivateDependencyModuleNames.AddRange([]);
 
-		// Uncomment if you are using online features
-		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
+        // Uncomment if you are using Slate UI
+        // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 
-		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
-	}
+        // Uncomment if you are using online features
+        // PrivateDependencyModuleNames.Add("OnlineSubsystem");
+
+        // To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
+    }
 }

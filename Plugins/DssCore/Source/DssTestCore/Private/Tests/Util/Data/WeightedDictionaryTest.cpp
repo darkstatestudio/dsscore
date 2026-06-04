@@ -1,5 +1,6 @@
 ﻿#if WITH_DEV_AUTOMATION_TESTS
-#include "DssAutomationTestBase.h"
+
+#include "Test/DssAutomationTestBase.h"
 #include "Util/Data/WeightedDictionary.h"
 
 #define TClass FWeightedDictionaryTests

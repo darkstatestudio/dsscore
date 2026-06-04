@@ -1,5 +1,8 @@
 ﻿// Copyright Dark State Studio.All rights reserved.
 #pragma once
+
+#if WITH_DEV_AUTOMATION_TESTS
+
 #include "Misc/AutomationTest.h"
 
 template <typename TDerived>
@@ -8,7 +11,7 @@ class FDssAutomationTestBase : public FAutomationTestBase
 public:
 	using MethodPtr = void (TDerived::*)();
 
-	FDssAutomationTestBase(const FString& InName): FAutomationTestBase(InName, false)
+	FDssAutomationTestBase(const FString& InName) : FAutomationTestBase(InName, false)
 	{
 	}
 
@@ -35,7 +38,6 @@ protected:
 			(static_cast<TDerived*>(this)->*Func)();
 
 			static_cast<TDerived*>(this)->AfterEach();
-
 		}
 
 		return true;
@@ -73,8 +75,7 @@ private:
 			OutBeautifiedNames.Add(PrettyName); \
 			OutTestCommands.Add(FString()); \
 		} \
-		virtual FString GetBeautifiedTestName() const override { return PrettyName; } \
-
+		virtual FString GetBeautifiedTestName() const override { return PrettyName; }
 
 #define DSS_TEST_SUITE( TClass, PrettyName ) \
 	DSS_TEST_SUITE_PRIVATE(TClass, PrettyName, __FILE__, __LINE__)
@@ -91,8 +92,7 @@ private:
 	_DSS_RT_##Name _RT_##Name{this}; \
 	void TEST_##Name()\
 	{\
-		AddInfo(FString::Printf(TEXT("Test: %s"), TEXT(#Name)));\
-
+		AddInfo(FString::Printf(TEXT("Test: %s"), TEXT(#Name)));
 
 #define DSS_TEST_SUITE_END_PRIVATE(TClass) \
 	}; namespace { TClass TClass##AutomationTestInstance(TEXT(#TClass));};
@@ -100,3 +100,4 @@ private:
 #define DSS_TEST_SUITE_END(TClass) \
 	DSS_TEST_SUITE_END_PRIVATE( TClass )
 
+#endif

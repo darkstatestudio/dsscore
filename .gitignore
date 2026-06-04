@@ -77,7 +77,9 @@ DerivedDataCache/*
 
 # IDE files
 .idea/
+DssCoreSample.uproject.DotSettings.user
 
 Content/Developers/*
 
 dist/
+
