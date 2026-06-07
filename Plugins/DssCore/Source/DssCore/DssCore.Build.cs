@@ -22,11 +22,14 @@ public class DssCore : ModuleRules
         );
 
 
-        PublicDependencyModuleNames.AddRange(
-            [
-                "Core", "UMG", "DeveloperSettings"
-            ]
-        );
+        PublicDependencyModuleNames.AddRange([
+            "Core",
+            "UMG",
+            "DeveloperSettings",
+            "GameplayTags",
+            "Json",
+            "JsonUtilities"
+        ]);
 
 
         PrivateDependencyModuleNames.AddRange(

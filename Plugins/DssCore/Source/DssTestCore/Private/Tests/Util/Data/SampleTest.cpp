@@ -1,6 +1,6 @@
 ﻿#if WITH_DEV_AUTOMATION_TESTS
 
-#include "Test/DssAutomationTestBase.h"
+#include "Test/DssAutomationTest.h"
 
 #define TClass FSampleTests
 DSS_TEST_SUITE(TClass, "DSS.Unit.Sample")

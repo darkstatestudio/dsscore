@@ -65,4 +65,15 @@ public:
 
 		return OutObj;
 	}
+
+	FORCEINLINE static FString JsonToCompactString(const TSharedPtr<FJsonObject>& Json)
+	{
+		FString OutString;
+		if (!Json.IsValid()) { return OutString; }
+
+		const TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutString);
+		FJsonSerializer::Serialize(Json.ToSharedRef(), Writer);
+
+		return OutString;
+	}
 };

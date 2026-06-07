@@ -11,7 +11,11 @@ param(
 
     [switch]$MigrateContent,
 
-    [switch]$DryRun
+    [switch]$DryRun,
+
+    [switch]$Rebase,
+
+    [switch]$LinkCurrent
 )
 
 
@@ -30,12 +34,12 @@ function Write-Log {
     if ($DryRun) {
         $dryRunPart = "[DryRun]"
     }
-    $messageBase = "[$timestamp][$Level]$dryRunPart $Message"
+    $messageBase = "[$timestamp][$Level]$dryRunPart "
 
     switch ($Level) {
-        "INFO" { Write-Host "$messageBase" -ForegroundColor Blue }
-        "WARN" { Write-Host "$messageBase" -ForegroundColor Yellow }
-        "ERROR" { Write-Host "$messageBase" -ForegroundColor Red }
+        "INFO" { Write-Host "$messageBase" -ForegroundColor Blue -NoNewline; Write-Host $Message }
+        "WARN" { Write-Host "$messageBase" -ForegroundColor Yellow -NoNewline; Write-Host $Message }
+        "ERROR" { Write-Host "$messageBase" -ForegroundColor Red -NoNewline; Write-Host $Message }
     }
 }
 
@@ -131,7 +135,7 @@ function New-CleanSymlink {
             throw "Path exists but is not a link: $Link"
         }
 
-        Write-Log "Removing existing: $Link" -DryRun:$DryRun
+        Write-Log "Removing existing link: $Link" -DryRun:$DryRun
         if (!$DryRun) {
             Remove-Item $Link -Force -Recurse
         }
@@ -165,17 +169,21 @@ if ($Branch -eq "") {
 }
 
 $PluginManifest = Get-DssPluginManifest $PluginFullPath
-Write-Log "PluginManifest: $PluginManifest" -DryRun:$DryRun
+Write-Log "Plugin: '$PluginFullPath'" -DryRun:$DryRun
+Write-Log "Plugin Manifest: $PluginManifest" -DryRun:$DryRun
 
 $WorktreesFull = Join-Path $DssCoreRoot $WorktreesDir | Resolve-Path
 $SafeBranch = $Branch.Replace("/", "_")
 $WorktreePath = Join-Path $WorktreesFull "DssCoreWT_$SafeBranch"
 $DssCoreWorktreeSourcePath = Join-Path $WorktreePath "Plugins\DssCore\Source"
 
-New-GitWorktree $DssCoreRepo $WorktreePath $Branch -DryRun:$DryRun
-
-if ($Rebase) {
-    Update-GitWorktree $WorktreePath $Branch -DryRun:$DryRun
+if ($LinkCurrent) {
+	$DssCoreWorktreeSourcePath = Join-Path $DssCoreRoot "Plugins\DssCore\Source"
+} else {
+	New-GitWorktree $DssCoreRepo $WorktreePath $Branch -DryRun:$DryRun
+	if ($Rebase) {
+		Update-GitWorktree $WorktreePath $Branch -DryRun:$DryRun
+	}
 }
 
 $DssCoreModules = "DssCore", "DssEditorCore"
@@ -185,5 +193,9 @@ foreach ($module in $DssCoreModules) {
     New-CleanSymlink -Link "$link" -Target "$target" -DryRun:$DryRun
 }
 
-Write-Log "Plugin: '$PluginFullPath'" -DryRun:$DryRun
-Write-Log "DssCore branch: '$Branch' Worktree: '$WorktreePath' " -DryRun:$DryRun
+
+if ($LinkCurrent) {
+	Write-Log "Linked current to plugin" -DryRun:$DryRun
+} else {
+	Write-Log "DssCore branch: '$Branch' Worktree: '$WorktreePath' " -DryRun:$DryRun
+}
