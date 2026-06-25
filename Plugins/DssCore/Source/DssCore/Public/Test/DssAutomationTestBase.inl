@@ -57,3 +57,25 @@ void TFDssAutomationTestBase<TDerived>::TestJsonHasExactKeys(const TSharedPtr<FJ
 		TestTrue(*FString::Printf(TEXT("%s should not contain unexpected key '%s'"), *Context, *ActualKey), SortedExpected.Contains(ActualKey));
 	}
 }
+
+template <typename TDerived>
+void TFDssAutomationTestBase<TDerived>::CreateTestWorld(EWorldType::Type WorldType)
+{
+	if (TestWorldWrapper.CreateTestWorld(WorldType))
+	{
+		TestWorld = TestWorldWrapper.GetTestWorld();
+	}
+}
+
+template <typename TDerived>
+void TFDssAutomationTestBase<TDerived>::DestroyTestWorld(bool bForceGC)
+{
+	TestWorldWrapper.DestroyTestWorld(bForceGC);
+	TestWorld = nullptr;
+}
+
+template <typename TDerived>
+UWorld* TFDssAutomationTestBase<TDerived>::GetTestWorld()
+{
+	return TestWorld;
+}
