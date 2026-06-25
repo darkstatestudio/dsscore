@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Misc/AutomationTest.h"
+#include "Tests/AutomationCommon.h"
 
 template <typename TDerived>
 class TFDssAutomationTestBase : public FAutomationTestBase
@@ -18,9 +19,6 @@ public:
 		RegisteredMethods.Add(Name, Ptr);
 	}
 
-protected:
-	virtual bool RunTest(const FString& Parameters) override;
-
 	virtual void BeforeEach()
 	{
 	}
@@ -29,7 +27,16 @@ protected:
 	{
 	}
 
+protected:
+	virtual bool RunTest(const FString& Parameters) override;
 	void TestJsonHasExactKeys(const TSharedPtr<FJsonObject>& Json,const TArray<FString>& ExpectedKeys,const FString& Context);
+
+	void CreateTestWorld(EWorldType::Type WorldType = EWorldType::Editor);
+	void DestroyTestWorld(bool bForceGC = false);
+	UWorld* GetTestWorld();
+
+	FTestWorldWrapper TestWorldWrapper;
+	UWorld* TestWorld = nullptr;
 
 private:
 	TMap<FString, MethodPtr> RegisteredMethods;
