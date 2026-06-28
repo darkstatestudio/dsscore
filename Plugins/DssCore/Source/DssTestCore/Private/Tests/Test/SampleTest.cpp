@@ -2,21 +2,33 @@
 
 #include "Test/DssAutomationTest.h"
 
-#define TClass FSampleTests
-DSS_TEST_SUITE(TClass, "DSS.Unit.Sample")
 
-	DSS_TEST(TClass, Test1)
-		TestEqual("Value", 1, 1);
+DSS_UNIT_TEST_SUITE(FSampleTest, "Unit.Sample")
+	DSS_DEFINE_TESTS
+	{
+		BeforeEach([this]
+		{
+		});
+
+		AfterEach([this]
+		{
+		});
+
+		Test("Simple1", [this]
+		{
+			TestEqual("Value", 1, 1);
+		});
+
+		Test("Simple2", [this]
+		{
+			TestEqual("Value", 1, 1);
+		});
+
+		Test("Simple3", [this]
+		{
+			TestEqual("Value", 1, 1);
+		});
 	}
 
-	DSS_TEST(TClass, Test2)
-		TestEqual("Value", 1, 1);
-	}
-
-	DSS_TEST(TClass, Test3)
-		TestEqual("Value", 1, 1);
-	}
-
-DSS_TEST_SUITE_END(TClass)
-
+DSS_TEST_SUITE_END
 #endif

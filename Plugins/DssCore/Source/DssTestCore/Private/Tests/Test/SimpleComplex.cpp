@@ -1,6 +1,6 @@
 // Test to compare DssAutomation simple tests with complex
 
-IMPLEMENT_COMPLEX_AUTOMATION_TEST(FComplexSpeedTest, "DSS.Unit.ComplexSpeed",
+IMPLEMENT_COMPLEX_AUTOMATION_TEST(FComplexSpeedTest, "Unit.ComplexSpeed",
                                   EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
 
 void FComplexSpeedTest::GetTests(TArray<FString>& OutBeautifiedNames, TArray<FString>& OutTestCommands) const

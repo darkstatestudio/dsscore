@@ -4,42 +4,57 @@
 #include "Misc/AutomationTest.h"
 #include "Tests/AutomationCommon.h"
 
-template <typename TDerived>
-class TFDssAutomationTestBase : public FAutomationTestBase
+class FDssAutomationTestBase : public FAutomationTestBase
 {
 public:
-	using MethodPtr = void (TDerived::*)();
+	using FTestFunctionPtr = TFunction<void()>;
 
-	explicit TFDssAutomationTestBase(const FString& InName) : FAutomationTestBase(InName, false)
+	explicit FDssAutomationTestBase(const FString& InName) : FAutomationTestBase(InName, false)
 	{
-	}
-
-	void RegisterTest(const FString& Name, MethodPtr Ptr)
-	{
-		RegisteredMethods.Add(Name, Ptr);
-	}
-
-	virtual void BeforeEach()
-	{
-	}
-
-	virtual void AfterEach()
-	{
+		BeforeEachCallback = [this]() {};
+		AfterEachCallback = [this]() {};
 	}
 
 protected:
+	void BeforeEach(const TFunction<void()>& F)
+	{
+		BeforeEachCallback = F;
+	}
+
+	void AfterEach(const TFunction<void()>& F)
+	{
+		AfterEachCallback = F;
+	}
+
+	void Test(const char* Name, const FTestFunctionPtr& F)
+	{
+		Tests.Add(UTF8_TO_TCHAR(Name), F);
+	}
+
+	/**
+	 * @internal
+	 */
+	bool HasAnyTest() const
+	{
+		return Tests.Num() > 0;
+	}
+
 	virtual bool RunTest(const FString& Parameters) override;
-	void TestJsonHasExactKeys(const TSharedPtr<FJsonObject>& Json,const TArray<FString>& ExpectedKeys,const FString& Context);
+
+	void TestJsonHasExactKeys(const TSharedPtr<FJsonObject>& Json, const TArray<FString>& ExpectedKeys, const FString& Context);
 
 	void CreateTestWorld(EWorldType::Type WorldType = EWorldType::Editor);
 	void DestroyTestWorld(bool bForceGC = false);
+
 	UWorld* GetTestWorld();
 
 	FTestWorldWrapper TestWorldWrapper;
 	UWorld* TestWorld = nullptr;
 
 private:
-	TMap<FString, MethodPtr> RegisteredMethods;
+	TMap<FString, FTestFunctionPtr> Tests;
+	TFunction<void()> BeforeEachCallback;
+	TFunction<void()> AfterEachCallback;
 };
 
 #include "DssAutomationTestBase.inl"

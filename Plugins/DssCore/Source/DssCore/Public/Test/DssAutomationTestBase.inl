@@ -1,33 +1,27 @@
 #pragma once
 
-#include "DssAutomationTestBase.h"
-
-template <typename TDerived>
-bool TFDssAutomationTestBase<TDerived>::RunTest(const FString& Parameters)
+inline bool FDssAutomationTestBase::RunTest(const FString& Parameters)
 {
-	if (RegisteredMethods.Num() == 0)
+	if (!HasAnyTest())
 	{
-		AddError("No test cases found");
 		return false;
 	}
 
-	for (const auto& Pair : RegisteredMethods)
+	for (const auto& Pair : Tests)
 	{
-		const MethodPtr Func = Pair.Value;
+		const auto Func = Pair.Value;
 
-		static_cast<TDerived*>(this)->BeforeEach();
-
-		(static_cast<TDerived*>(this)->*Func)();
-
-		static_cast<TDerived*>(this)->AfterEach();
+		AddInfo(FString::Printf(TEXT("Test: %s"), *Pair.Key));
+		BeforeEachCallback();
+		Func();
+		AfterEachCallback();
 	}
 
 	return true;
 }
 
-template <typename TDerived>
-void TFDssAutomationTestBase<TDerived>::TestJsonHasExactKeys(const TSharedPtr<FJsonObject>& Json, const TArray<FString>& ExpectedKeys,
-	const FString& Context)
+inline void FDssAutomationTestBase::TestJsonHasExactKeys(const TSharedPtr<FJsonObject>& Json, const TArray<FString>& ExpectedKeys,
+                                                         const FString& Context)
 {
 	TestTrue(*FString::Printf(TEXT("%s should be valid"), *Context), Json.IsValid());
 
@@ -58,8 +52,7 @@ void TFDssAutomationTestBase<TDerived>::TestJsonHasExactKeys(const TSharedPtr<FJ
 	}
 }
 
-template <typename TDerived>
-void TFDssAutomationTestBase<TDerived>::CreateTestWorld(EWorldType::Type WorldType)
+inline void FDssAutomationTestBase::CreateTestWorld(EWorldType::Type WorldType)
 {
 	if (TestWorldWrapper.CreateTestWorld(WorldType))
 	{
@@ -67,15 +60,13 @@ void TFDssAutomationTestBase<TDerived>::CreateTestWorld(EWorldType::Type WorldTy
 	}
 }
 
-template <typename TDerived>
-void TFDssAutomationTestBase<TDerived>::DestroyTestWorld(bool bForceGC)
+inline void FDssAutomationTestBase::DestroyTestWorld(bool bForceGC)
 {
 	TestWorldWrapper.DestroyTestWorld(bForceGC);
 	TestWorld = nullptr;
 }
 
-template <typename TDerived>
-UWorld* TFDssAutomationTestBase<TDerived>::GetTestWorld()
+inline UWorld* FDssAutomationTestBase::GetTestWorld()
 {
 	return TestWorld;
 }
