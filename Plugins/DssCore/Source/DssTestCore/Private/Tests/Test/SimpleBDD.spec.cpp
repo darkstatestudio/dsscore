@@ -1,6 +1,6 @@
 // Test to compare DssAutomation simple tests with complex
 
-BEGIN_DEFINE_SPEC(TestSpeedSpec, "DSS.Unit.TestSpeedSpec", EAutomationTestFlags::SmokeFilter | EAutomationTestFlags::EditorContext)
+BEGIN_DEFINE_SPEC(TestSpeedSpec, "Unit.TestSpeedSpec", EAutomationTestFlags::SmokeFilter | EAutomationTestFlags::EditorContext)
 END_DEFINE_SPEC(TestSpeedSpec)
 
 void TestSpeedSpec::Define()

@@ -54,7 +54,7 @@ public:
 
 		for (const auto& Pair : InObj->Values)
 		{
-			FString Key = Pair.Key;
+			auto Key = FString(Pair.Key);
 			if (Key.Len() > 0)
 			{
 				Key[0] = FChar::ToUpper(Key[0]); // camelCase -> PascalCase
