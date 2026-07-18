@@ -1,5 +1,6 @@
 # Visual Studio 2015 user specific files
 .vs/
+.vsconfig
 
 # Visual Studio 2015 database file
 *.VC.db
@@ -38,6 +39,7 @@
 *.xcodeproj
 *.xcworkspace
 *.sln
+*.slnx
 *.suo
 *.opensdf
 *.sdf

@@ -5,7 +5,7 @@
 #include "DssAutomationTestBase.h"
 
 #define DSS_TEST_SUITE_PRIVATE(_TClass, _PrettyName, _FileName, _LineNumber, _Flags, _StressTest ) \
-namespace { \
+namespace DSS_TEST_SUITE_ ## _TClass { \
 	class _TClass; \
 	constexpr auto ClassName = TEXT(#_TClass); \
 	typedef _TClass TestClass; \

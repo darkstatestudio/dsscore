@@ -28,7 +28,7 @@ common systems and performance-oriented tools.
 
 # Supported Engine Versions
 
-- Unreal Engine 5.6
+- Unreal Engine 5.8
 
 ---
 
