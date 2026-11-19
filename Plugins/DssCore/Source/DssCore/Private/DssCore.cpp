@@ -2,17 +2,19 @@
 
 #include "DssCore.h"
 
+#include "Debug/DssDebug.h"
+#include "HAL/IConsoleManager.h"
+
 #define LOCTEXT_NAMESPACE "FDssCoreModule"
 
 void FDssCoreModule::StartupModule()
 {
-	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
+	FDssDebug::Initialize();
 }
 
 void FDssCoreModule::ShutdownModule()
 {
-	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
-	// we call this function before unloading the module.
+	FDssDebug::Shutdown();
 }
 
 #undef LOCTEXT_NAMESPACE
