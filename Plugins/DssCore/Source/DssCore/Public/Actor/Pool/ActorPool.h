@@ -21,7 +21,10 @@ struct FActorPoolConfig
 	int32 WarmupCount = 2;
 
 	UPROPERTY()
-	bool bDynamicGrow = false;
+	int32 IncreaseCount = 4;
+
+	UPROPERTY()
+	bool bDynamicGrow = true;
 };
 
 UCLASS(BlueprintType)

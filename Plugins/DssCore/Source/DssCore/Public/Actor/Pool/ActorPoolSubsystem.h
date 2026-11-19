@@ -5,10 +5,10 @@
 #include "CoreMinimal.h"
 #include "ActorPool.h"
 #include "Subsystems/WorldSubsystem.h"
-#include "ActorPoolsSubsystem.generated.h"
+#include "ActorPoolSubsystem.generated.h"
 
 UCLASS(BlueprintType)
-class DSSCORE_API UActorPoolsSubsystem : public UWorldSubsystem
+class DSSCORE_API UActorPoolSubsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
 
