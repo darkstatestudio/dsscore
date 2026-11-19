@@ -1,9 +1,10 @@
-﻿// Dark State Studio
+﻿// Copyright Dark State Studio.All rights reserved.
 
+#include "Actor/Pool/ActorPoolSubsystem.h"
 
-#include "Actor/Pool/ActorPoolsSubsystem.h"
+#include "GameFramework/Actor.h"
 
-void UActorPoolsSubsystem::Deinitialize()
+void UActorPoolSubsystem::Deinitialize()
 {
 	for (auto& It : Pools)
 	{
@@ -17,7 +18,7 @@ void UActorPoolsSubsystem::Deinitialize()
 	Super::Deinitialize();
 }
 
-UActorPool* UActorPoolsSubsystem::CreatePool(const FActorPoolConfig& Config)
+UActorPool* UActorPoolSubsystem::CreatePool(const FActorPoolConfig& Config)
 {
 	if (Pools.Contains(Config.ActorClass))
 	{
@@ -31,16 +32,22 @@ UActorPool* UActorPoolsSubsystem::CreatePool(const FActorPoolConfig& Config)
 	return Pool;
 }
 
-AActor* UActorPoolsSubsystem::Acquire(TSubclassOf<AActor> ActorClass)
+AActor* UActorPoolSubsystem::Acquire(TSubclassOf<AActor> ActorClass)
 {
-	if (!*ActorClass) return nullptr;
+	if (!*ActorClass)
+	{
+		return nullptr;
+	}
 	UActorPool* Pool = GetPool(ActorClass);
 	return Pool ? Pool->Acquire() : nullptr;
 }
 
-void UActorPoolsSubsystem::Release(AActor* Actor)
+void UActorPoolSubsystem::Release(AActor* Actor)
 {
-	if (!IsValid(Actor)) return;
+	if (!IsValid(Actor))
+	{
+		return;
+	}
 
 	TSubclassOf<AActor> Class = Actor->GetClass();
 	if (UActorPool** PoolPtr = Pools.Find(Class))
@@ -53,7 +60,7 @@ void UActorPoolsSubsystem::Release(AActor* Actor)
 	}
 }
 
-UActorPool* UActorPoolsSubsystem::GetPool(TSubclassOf<AActor> ActorClass)
+UActorPool* UActorPoolSubsystem::GetPool(TSubclassOf<AActor> ActorClass)
 {
 	if (UActorPool** Existing = Pools.Find(ActorClass))
 	{
@@ -61,5 +68,6 @@ UActorPool* UActorPoolsSubsystem::GetPool(TSubclassOf<AActor> ActorClass)
 	}
 
 	FActorPoolConfig DefaultConfig;
+	DefaultConfig.ActorClass = ActorClass;
 	return CreatePool(DefaultConfig);
 }

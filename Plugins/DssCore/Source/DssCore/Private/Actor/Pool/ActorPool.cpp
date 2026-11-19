@@ -1,32 +1,41 @@
-﻿// Dark State Studio
-
+﻿// Copyright Dark State Studio.All rights reserved.
 
 #include "Actor/Pool/ActorPool.h"
+
+#include "GameFramework/Actor.h"
+#include "Engine/World.h"
 
 void UActorPool::Init(UWorld* InWorld, const FActorPoolConfig& InConfig)
 {
 	check(!IsInitialized());
 	check(InWorld);
-	check(*(InConfig.ActorClass));
+	check(InConfig.ActorClass);
 
 	World = InWorld;
 	Config = InConfig;
 
 	const int32 Warmup = FMath::Min(Config.WarmupCount, Config.MaxSize);
+	Free.Reserve(Warmup);
+	Used.Reserve(Warmup);
 	for (int32 i = 0; i < Warmup; ++i)
 	{
-		AActor* Actor = SpawnNewActor();
+		auto Actor = SpawnNewActor();
 		if (Actor)
 		{
 			PrepareActorForPool(Actor);
 			Free.Add(Actor);
 		}
 	}
+
+	bInitialized = true;
 }
 
 AActor* UActorPool::Acquire()
 {
-	if (!bInitialized) return nullptr;
+	if (!bInitialized)
+	{
+		return nullptr;
+	}
 
 	AActor* Actor = nullptr;
 
@@ -36,6 +45,7 @@ AActor* UActorPool::Acquire()
 	}
 	else if (Used.Num() < Config.MaxSize || Config.bDynamicGrow)
 	{
+		Used.Reserve(Used.Max() + Config.IncreaseCount);
 		Actor = SpawnNewActor();
 	}
 
@@ -52,8 +62,14 @@ AActor* UActorPool::Acquire()
 
 void UActorPool::Release(AActor* Actor)
 {
-	if (!IsValid(Actor)) return;
-	if (!Used.Contains(Actor)) return;
+	if (!IsValid(Actor))
+	{
+		return;
+	}
+	if (!Used.Contains(Actor))
+	{
+		return;
+	}
 
 	Used.Remove(Actor);
 
@@ -69,7 +85,10 @@ void UActorPool::Release(AActor* Actor)
 
 AActor* UActorPool::SpawnNewActor()
 {
-	if (!World) return nullptr;
+	if (!World)
+	{
+		return nullptr;
+	}
 
 	FActorSpawnParameters Params;
 	Params.SpawnCollisionHandlingOverride =
@@ -97,12 +116,18 @@ void UActorPool::Shutdown()
 {
 	for (AActor* Actor : Free)
 	{
-		if (IsValid(Actor)) Actor->Destroy();
+		if (IsValid(Actor))
+		{
+			Actor->Destroy();
+		}
 	}
 
 	for (AActor* Actor : Used)
 	{
-		if (IsValid(Actor)) Actor->Destroy();
+		if (IsValid(Actor))
+		{
+			Actor->Destroy();
+		}
 	}
 
 	Free.Empty();
